@@ -1,4 +1,4 @@
 gitl.rb
 =======
 
-Git loop program implementation in Ruby.
+Git loop program written in Ruby.
