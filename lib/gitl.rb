@@ -1,12 +1,7 @@
-# typed: true
 # frozen_string_literal: true
-
-require('sorbet-runtime')
 
 # Git loop class
 class GitLoop < Object
-  extend T::Sig
-
   def self.version
     File.read('VERSION').chomp
   end
@@ -18,7 +13,6 @@ class GitLoop < Object
     "#{dir.chomp}: "
   end
 
-  sig { params(arguments: T::Array[String]).void }
   def initialize(arguments)
     return unless arguments.length == 1
 
