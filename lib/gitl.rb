@@ -23,18 +23,14 @@ class GitLoop
 
     commands.each do |cmd|
       begin
-        # 2. Use Shellwords to parse arguments correctly
-        # This handles "file with spaces.txt" and escaped quotes
         args = Shellwords.shellwords(cmd)
 
-        # Execute git with the parsed array
         success = system("git", *args)
 
         unless success
           warn "Command '#{cmd}' failed with status #{$?.exitstatus}"
         end
       rescue ArgumentError => e
-        # Handle cases where shell parsing fails (e.g., unclosed quotes)
         warn "Syntax error in command '#{cmd}': #{e.message}"
       end
     end
