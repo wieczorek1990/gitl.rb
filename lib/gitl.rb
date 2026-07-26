@@ -13,7 +13,7 @@ class GitLoop
   end
 
   def initialize(arguments)
-    if arguments.length == 1 && arguments[0] == '--version'
+    if arguments.include?('--version')
       puts VERSION
       exit
     end
