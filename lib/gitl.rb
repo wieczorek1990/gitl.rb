@@ -1,10 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'English'
 require 'shellwords'
 
+# Git looping console program.
 class GitLoop
-  VERSION = "0.0.3"
+  VERSION = '0.0.3'
 
   def self.anchor
     dir = File.basename(Dir.pwd)
@@ -12,37 +14,37 @@ class GitLoop
   end
 
   def initialize(arguments)
-    if arguments.include?('--version')
-      puts VERSION
-      exit
-    end
+    return unless arguments.include?('--version')
+
+    puts VERSION
+    exit
   end
 
   def process_commands(input)
     commands = input.split(';').map(&:strip).reject(&:empty?)
 
     commands.each do |cmd|
-      begin
-        args = Shellwords.shellwords(cmd)
+      args = Shellwords.shellwords(cmd)
 
-        success = system("git", *args)
+      success = system('git', *args)
 
-        unless success
-          warn "Command '#{cmd}' failed with status #{$?.exitstatus}"
-        end
-      rescue ArgumentError => e
-        warn "Syntax error in command '#{cmd}': #{e.message}"
-      end
+      warn "Command '#{cmd}' failed with status #{$CHILD_STATUS.exitstatus}" unless success
+    rescue ArgumentError => e
+      warn "Syntax error in command '#{cmd}': #{e.message}"
+    end
+  end
+
+  def trap
+    Signal.trap('INT') do
+      puts "\nExiting..."
+      exit
     end
   end
 
   def main
-    Signal.trap('INT') {
-      puts "\nExiting..."
-      exit
-    }
-
+    trap
     anchor = GitLoop.anchor
+
     loop do
       print anchor if anchor
 

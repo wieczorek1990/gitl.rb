@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-source :rubygems
+source 'https://rubygems.org'
 
 gem 'rubocop', group: :development
