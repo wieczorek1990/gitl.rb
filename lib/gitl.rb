@@ -3,7 +3,6 @@
 
 require 'shellwords'
 
-# Git loop class
 class GitLoop
   VERSION = "0.0.3"
 
