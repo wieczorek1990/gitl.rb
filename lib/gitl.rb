@@ -42,7 +42,10 @@ class GitLoop
   end
 
   def main
-    Signal.trap('INT') {}
+    Signal.trap('INT') {
+      puts "\nExiting..."
+      exit
+    }
 
     anchor = GitLoop.anchor
     loop do
